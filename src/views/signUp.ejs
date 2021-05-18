@@ -8,7 +8,7 @@
     <title>Sign in.</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
-   
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
   </head>
 
@@ -17,13 +17,16 @@
       <h1>Do the registeration!!</h1>
 
       <form action= "/signUp" method= "POST">
+        <div id="error_msg"></div>
         <div class="form-group">
           <label for="username">Username</label>
           <input type="username" name= "username" class="form-control" id="username">
+          <span></span>
         </div>
         <div class="form-group">
           <label for="email">Email address</label>
           <input type="email" name= "email" class="form-control" id="email">
+          <span>                </span>
         </div>
         <div class="form-group">
           <label for="password">Password</label>
@@ -38,4 +41,27 @@
       </form>
     </div>
   </body>
+
+  <script>
+$('document').ready(function(){
+$('#email').keyup(function() {
+    $.ajax({
+           type: "POST",
+           url: "signUpForm",
+           data: {
+                  email: $('#email').val()
+          },
+           success: function(response){
+            if (response == 'taken' ) {
+          email_state = false;
+          $('#email').parent().removeClass();
+          $('#email').parent().addClass("form_error");
+          $('#email').siblings("span").text('Sorry... Email already taken');
+               
+           }
+        }
+    });
+  });
+});
+  </script>
 </html>

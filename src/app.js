@@ -4,6 +4,7 @@ const path = require('path');
 
 require("./db/conn");
 const Register = require("./models/registers"); 
+const userSchema = require("./models/registers");
 
 const port = process.env.PORT || 3000;
 
@@ -52,6 +53,35 @@ app.post("/signUp", async (req, res)=>{
     } catch(error) {
         res.status(400).send(error);
     }
+
+})
+
+app.post('/signUpForm',function(req, res){
+
+    //var query = { email: req.body };
+    //console.log(query);
+    //userSchema.collection("Register").find(query).toArray(function(err, result) {
+    
+        Register.find({'email':req.body }, function(err, user) {
+
+            if (err) {
+                res.send(nottaken);
+            }
+    
+            //if user found.
+            if (user.length!=0) {
+              if(user.email){
+
+                res.send(taken);      
+                 
+            }                                    
+                 var err = new Error();
+                err.status = 310;
+                return done(err);
+
+            }
+});
+
 })
 
 app.listen(port, ()=>{
