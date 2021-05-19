@@ -62,12 +62,13 @@ app.post('/signUpForm',function(req, res){
     //console.log(query);
     //userSchema.collection("Register").find(query).toArray(function(err, result) {
     
-        Register.find({'email':req.body }, function(err, user) {
+        Register.Register.find({'email':req.body }, function(err, user) {
 
             if (err) {
                 res.send(nottaken);
             }
-    
+       
+            console.log(user);
             //if user found.
             if (user.length!=0) {
               if(user.email){
